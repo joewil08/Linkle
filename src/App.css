@@ -17,27 +17,28 @@ body {
     flex-direction: column;
     gap: 5px;
     align-items: center;
-
-    &:focus {
-        outline: none;
-    }
 }
+
+.linkle:focus {
+    outline: none;
+}
+
 
 .title {
     text-transform: capitalize;
 }
 
-.notification{
+.notification {
     text-align: center;
     height: 1rem;
     margin: 1em;
     color: salmon;
     font-weight: 600;
     font-size: 1.25rem;
+}
 
-    &--green {
-        color: #538d4e;
-    }
+.notification--green {
+    color: #538d4e;
 }
 
 .row {
@@ -45,80 +46,73 @@ body {
     gap: 5px;
     font-weight: 800;
     font-size: 2rem;
-
-    &--bounce {
-        animation: 0.3s linear bounce;
-    }
-
-    .letter {
-        width: 60px;
-        height: 60px;
-        background-color: #121213;
-        border: 2px solid #3a3a3c;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        transform-style: preserve-3d;
-
-        &--active {
-            border-color: #565758;
-            animation: 0.1s linear scale;
-        }
-
-        .back {
-            position: absolute;
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: rotateX(180deg);
-            backface-visibility: hidden;
-        }
-    }
 }
 
-.rotate {
-    &--100 {
-        animation: 0.5s linear 0.1s rotate forwards;
-    }
-
-    &--200 {
-        animation: 0.5s linear 0.2s rotate forwards;
-    }
-
-    &--300 {
-        animation: 0.5s linear 0.3s rotate forwards;
-    }
-
-    &--400 {
-        animation: 0.5s linear 0.4s rotate forwards;
-    }
-
-    &--500 {
-        animation: 0.5s linear 0.5s rotate forwards;
-    }
+.row--bounce {
+    animation: 0.3s linear bounce;
 }
 
-.present {
-    .back {
-        background-color: #b59f3b;
-    }
+.row .letter {
+    width: 60px;
+    height: 60px;
+    background-color: #121213;
+    border: 2px solid #3a3a3c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transform-style: preserve-3d;
 }
 
-.absent {
-    .back {
-        background-color: #3a3a3c;
-    }
+.row .letter--active {
+    border-color: #565758;
+    animation: 0.1s linear scale;
 }
 
-.correct {
-    .back {
-        background-color: #538d4e;
-    }
+.row .letter .back {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotateX(180deg);
+    backface-visibility: hidden;
 }
+
+.row .rotate--100 {
+    animation: 0.5s linear 0.1s rotate forwards;
+}
+
+.row .rotate--200 {
+    animation: 0.5s linear 0.2s rotate forwards;
+}
+
+.row .rotate--300 {
+    animation: 0.5s linear 0.3s rotate forwards;
+}
+
+.row .rotate--400 {
+    animation: 0.5s linear 0.4s rotate forwards;
+}
+
+.row .rotate--500 {
+    animation: 0.5s linear 0.5s rotate forwards;
+}
+
+.row .present .back {
+    background-color: #b59f3b;
+}
+
+.row .absent .back {
+    background-color: #3a3a3c;
+}
+
+.row .correct .back {
+    background-color: #538d4e;
+}
+
 
 @keyframes rotate {
     0% {
@@ -160,10 +154,8 @@ body {
 }
 
 @media only screen and (max-width: 700px) {
-    .row {
-        .letter {
-            width: 50px;
-            height: 50px;
-        }
-    }
+    .row .letter {
+        width: 50px;
+        height: 50px;
+   }
 }

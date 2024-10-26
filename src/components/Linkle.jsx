@@ -99,7 +99,20 @@ export default function Linkle() {
     };
 
     const hitBackspace = () => {
-        //TODO add later
+        setNotification("");
+
+        if (guesses[activeRowIndex][0] !== " ") {
+            const newGuesses = [...guesses];
+
+            newGuesses[activeRowIndex] = replaceCharacter(
+                newGuesses[activeRowIndex],
+                activeLetterIndex - 1,
+                " "
+            );
+
+            setGuesses(newGuesses);
+            setActiveLetterIndex((index) => index - 1);
+        }
     };
 
     const handleKeyDown = (event) => {
@@ -131,9 +144,18 @@ export default function Linkle() {
             onKeyDown={handleKeyDown}
         >
         <h1 className="title">Linkle</h1>
-        <div className="notification">{notification}</div>
+        <div className={`notification ${solutionFound && "notification--green"}`}>
+            {notification}
+        </div>
         {guesses.map((guess, index) => {
-            return <Row key={index} word={guess} />
+            return <Row
+                key={index}
+                word={guess}
+                markAsSolution={solutionFound && activeRowIndex === index}
+                markPresentAndAbsentLetters={activeRowIndex > index}
+                solution={SOLUTION}
+                bounceOnError={notification != "WELL DONE" && notification !== "" && activeRowIndex === index}
+            />
         })}
     </div>
     );
