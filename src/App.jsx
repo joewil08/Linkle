@@ -4,7 +4,7 @@ import Linkle from "./components/Linkle";
 function App() {
   return (
     <div className="App">
-      <Linkle/>
+      <Linkle />
     </div>
   );
 }
