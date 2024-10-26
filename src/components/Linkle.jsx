@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import "../styles/Linkle.css"
 import Row from "./Row";
 import Keyboard from "./Keyboard";
+import { LETTERS, potentialWords } from "../data/lettersAndWords";
 
 const SOLUTION = "zelda";
 
@@ -15,6 +15,7 @@ export default function Linkle() {
         "     ",
         "     "
     ]);
+    const [solutionFound, setSolutionFound] = useState(false);
 
     const linkleRef = useRef();
 
@@ -22,7 +23,18 @@ export default function Linkle() {
         linkleRef.current.focus();
     }, []);
 
-    const handleKeyDown = () => {};
+    const typeLetter = (letter) => {
+        //TODO add later
+        console.log("LETTER TYPED:", letter);
+    }
+
+    const handleKeyDown = (event) => {
+        if (solutionFound) return;
+
+        if (LETTERS.includes(event.key)) {
+            typeLetter(event.key);
+        }
+    };
 
     return (
         <div className="linkle"
