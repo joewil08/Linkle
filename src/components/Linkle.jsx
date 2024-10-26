@@ -16,6 +16,13 @@ export default function Linkle() {
         "     "
     ]);
     const [solutionFound, setSolutionFound] = useState(false);
+    const [activeLetterIndex, setActiveLetterIndex] = useState(0);
+    const [notification, setNotification] = useState("");
+    const [activeRowIndex, setActiveRowIndex] = useState(0);
+    const [failedGuesses, setFailedGuesses] = useState([]);
+    const [correctLetters, setCorrectLetters] = useState([]);
+    const [presentLetters, setPresentLetters] = useState([]);
+    const [absentLetters, setAbsentLetters] = useState([]);
 
     const linkleRef = useRef();
 
@@ -24,15 +31,93 @@ export default function Linkle() {
     }, []);
 
     const typeLetter = (letter) => {
+        if (activeLetterIndex < 5) {
+            setNotification("");
+
+            let newGuesses = [...guesses];
+            newGuesses[activeRowIndex] = replaceCharacter(
+                newGuesses[activeRowIndex],
+                activeLetterIndex,
+                letter
+            );
+
+            setGuesses(newGuesses);
+            setActiveLetterIndex((index) => index + 1);
+        }
+    };
+
+    const replaceCharacter = (string, index, replacement) => {
+        return (
+            string.slice(0, index) +
+            replacement +
+            string.slice(index + replacement.length)
+        );
+    };
+
+    const hitEnter = () => {
+        if (activeLetterIndex === 5) {
+            const currentGuess = guesses[activeRowIndex];
+
+            if (failedGuesses.includes(currentGuess)) {
+                setNotification("WORD TRIED ALREADY");
+            } else if (currentGuess === SOLUTION) {
+                setSolutionFound(true);
+                setNotification("WELL DONE");
+                setCorrectLetters([...SOLUTION]);
+            } else {
+                let correctLetters = [];
+
+                [...currentGuess].forEach((letter, index) => {
+                    if (SOLUTION[index] === letter) correctLetters.push(letter);
+                });
+
+                setCorrectLetters([...new Set(correctLetters)]);
+                
+                setPresentLetters([
+                    ...new Set([
+                        ...presentLetters, ...[...currentGuess].filter((letter) =>
+                            SOLUTION.includes(letter)
+                        )
+                    ]),
+                ]);
+
+                setAbsentLetters([
+                    ...new Set([
+                        ...absentLetters, ...[...currentGuess].filter((letter) =>
+                            !SOLUTION.includes(letter)
+                        )
+                    ]),
+                ]);
+
+                setFailedGuesses([...failedGuesses, currentGuess]);
+                setActiveRowIndex((index) => index + 1);
+                setActiveLetterIndex(0);
+            }
+        } else {
+            setNotification("FIVE LETTER WORDS ONLY");
+        }
+    };
+
+    const hitBackspace = () => {
         //TODO add later
-        console.log("LETTER TYPED:", letter);
-    }
+    };
 
     const handleKeyDown = (event) => {
         if (solutionFound) return;
 
         if (LETTERS.includes(event.key)) {
             typeLetter(event.key);
+            return;
+        }
+
+        if (event.key === "Enter") {
+            hitEnter();
+            return;
+        }
+
+        if (event.key === "Backspace") {
+            hitBackspace();
+            return;
         }
     };
 
@@ -46,7 +131,7 @@ export default function Linkle() {
             onKeyDown={handleKeyDown}
         >
         <h1 className="title">Linkle</h1>
-        <div className="notification"></div>
+        <div className="notification">{notification}</div>
         {guesses.map((guess, index) => {
             return <Row key={index} word={guess} />
         })}
