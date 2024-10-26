@@ -113,6 +113,49 @@ body {
     background-color: #538d4e;
 }
 
+.keyboard {
+    font-size: 1.25rem;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.keyboard .keyRow {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+.keyboard .key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #818384;
+    border-radius: 5px;
+    width: 40px;
+    height: 60px;
+    font-weight: 600;
+    transition: background-color 0.3s linear;
+    cursor: pointer
+}
+
+.keyboard .key--absent {
+    background-color: #3a3a3c;
+}
+
+.keyboard .key--present {
+    background-color: #b59f3b;
+}
+
+.keyboard .key--correct {
+    background-color: #538d4e;
+}
+
+.keyboard .enter, .keyboard .backspace {
+    font-size: 0.75rem;
+    width: 60px;
+}
 
 @keyframes rotate {
     0% {
@@ -157,5 +200,24 @@ body {
     .row .letter {
         width: 50px;
         height: 50px;
-   }
+    }
+
+   .keyboard {
+        font-size: 1rem;
+        gap: 6px;
+    }
+
+   .keyboard .keyRow {
+        gap: 4px;
+    }
+
+    .keyboard .key {
+        width: 30px;
+        height: 40px;
+    }
+
+    .keyboard .enter, .keyboard .backspace {
+        font-size: 0.75rem;
+        width: 60px;
+    }
 }

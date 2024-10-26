@@ -157,6 +157,14 @@ export default function Linkle() {
                 bounceOnError={notification != "WELL DONE" && notification !== "" && activeRowIndex === index}
             />
         })}
+        <Keyboard 
+            presentLetters={presentLetters}
+            correctLetters={correctLetters}
+            absentLetters={absentLetters}
+            typeLetter={typeLetter}
+            hitEnter={hitEnter}
+            hitBackspace={hitBackspace}
+        />
     </div>
     );
 }
