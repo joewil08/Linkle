@@ -1,11 +1,12 @@
-import './App.css'
+import './App.css';
+import Linkle from "./components/Linkle";
 
 function App() {
   return (
     <div className="App">
-      Hello world!
+      <Linkle/>
     </div>
-  )
+  );
 }
 
 export default App
