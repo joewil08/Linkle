@@ -30,6 +30,7 @@ export default function Linkle() {
         linkleRef.current.focus();
     }, []);
 
+    // inputs a letter
     const typeLetter = (letter) => {
         if (activeLetterIndex < 5) {
             setNotification("");
@@ -54,6 +55,7 @@ export default function Linkle() {
         );
     };
 
+    // submits the answer
     const hitEnter = () => {
         if (activeLetterIndex === 5) {
             const currentGuess = guesses[activeRowIndex];
@@ -64,6 +66,8 @@ export default function Linkle() {
                 setSolutionFound(true);
                 setNotification("WELL DONE");
                 setCorrectLetters([...SOLUTION]);
+            } else if (activeRowIndex > 5) {
+                setNotification("THE CORRECT WORD IS " + SOLUTION);
             } else {
                 let correctLetters = [];
 
@@ -71,22 +75,22 @@ export default function Linkle() {
                     if (SOLUTION[index] === letter) correctLetters.push(letter);
                 });
 
-                setCorrectLetters([...new Set(correctLetters)]);
+                setCorrectLetters([...correctLetters]);
                 
                 setPresentLetters([
-                    ...new Set([
+                    ...[
                         ...presentLetters, ...[...currentGuess].filter((letter) =>
                             SOLUTION.includes(letter)
                         )
-                    ]),
+                    ],
                 ]);
 
                 setAbsentLetters([
-                    ...new Set([
+                    ...[
                         ...absentLetters, ...[...currentGuess].filter((letter) =>
                             !SOLUTION.includes(letter)
                         )
-                    ]),
+                    ],
                 ]);
 
                 setFailedGuesses([...failedGuesses, currentGuess]);
@@ -98,6 +102,7 @@ export default function Linkle() {
         }
     };
 
+    // deletes the last letter
     const hitBackspace = () => {
         setNotification("");
 
@@ -115,6 +120,7 @@ export default function Linkle() {
         }
     };
 
+    // handles the various user inputs
     const handleKeyDown = (event) => {
         if (solutionFound) return;
 
@@ -151,8 +157,10 @@ export default function Linkle() {
             return <Row
                 key={index}
                 word={guess}
-                markAsSolution={solutionFound && activeRowIndex === index}
-                markPresentAndAbsentLetters={activeRowIndex > index}
+                applyRotation={
+                    activeRowIndex > index ||
+                    (solutionFound && activeRowIndex === index)
+                }
                 solution={SOLUTION}
                 bounceOnError={notification != "WELL DONE" && notification !== "" && activeRowIndex === index}
             />
