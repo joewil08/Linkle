@@ -3,7 +3,7 @@ import Row from "./Row";
 import Keyboard from "./Keyboard";
 import { LETTERS, potentialWords } from "../data/lettersAndWords";
 
-const SOLUTION = "zelda";
+const SOLUTION = potentialWords[Math.floor(Math.random() * potentialWords.length)];
 
 export default function Linkle() {
     // template for grid
@@ -66,8 +66,6 @@ export default function Linkle() {
                 setSolutionFound(true);
                 setNotification("WELL DONE");
                 setCorrectLetters([...SOLUTION]);
-            } else if (activeRowIndex > 5) {
-                setNotification("THE CORRECT WORD IS " + SOLUTION);
             } else {
                 let correctLetters = [];
 
@@ -96,6 +94,9 @@ export default function Linkle() {
                 setFailedGuesses([...failedGuesses, currentGuess]);
                 setActiveRowIndex((index) => index + 1);
                 setActiveLetterIndex(0);
+                if (activeRowIndex > 4) {
+                    setNotification("THE CORRECT WORD IS " + SOLUTION);
+                }
             }
         } else {
             setNotification("FIVE LETTER WORDS ONLY");
